@@ -1,0 +1,193 @@
+/* Global styles y Design Tokens */
+@use 'tailwindcss/base';
+@use 'tailwindcss/components';
+@use 'tailwindcss/utilities';
+
+:root {
+  /* === COLORES PRINCIPALES HANAL PIXÁN === */
+  --color-maya-gold: #FFD700;
+  --color-maya-orange: #FF6F00;
+  --color-maya-red: #D32F2F;
+  --color-maya-brown: #5D4037;
+  --color-maya-cream: #FFF8E1;
+  --color-ceiba-green: #2E7D32;
+  --color-ceiba-dark: #1B5E20;
+  --color-xibalba-purple: #4A148C;
+  --color-xibalba-black: #0A0A0A;
+  --color-cenote-blue: #0277BD;
+  
+  /* === SISTEMA DE COLORES ADAPTATIVOS === */
+  --color-primary: #1EC1B8;
+  --color-primary-dark: #00A693;
+  --color-primary-light: #4FD1C7;
+  --color-secondary: #FF6F00;
+  --color-secondary-dark: #E65100;
+  --color-secondary-light: #FF8A50;
+  --color-accent: #FFD700;
+  --color-accent-dark: #FFC107;
+  --color-accent-light: #FFECB3;
+  --color-accent-rgb: 255, 215, 0;
+  
+  /* === TEXTOS Y FONDOS === */
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #E0E0E0;
+  --color-text-muted: #9E9E9E;
+  --color-text-inverse: #000000;
+  --color-bg-primary: #000000;
+  --color-bg-secondary: #0A0A0A;
+  --color-bg-card: rgba(20, 20, 20, 0.8);
+  --color-bg-overlay: rgba(0, 0, 0, 0.6);
+  
+  /* === ESTADOS === */
+  --color-success: #4CAF50;
+  --color-warning: #FF9800;
+  --color-error: #F44336;
+  --color-info: #2196F3;
+  
+  /* === BORDES === */
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-light: rgba(255, 255, 255, 0.05);
+  --color-border-focus: #1EC1B8;
+  
+  /* === GRADIENTES === */
+  --gradient-maya-sunset: linear-gradient(135deg, #FFD700 0%, #FF6F00 50%, #D32F2F 100%);
+  --gradient-ceiba-depths: linear-gradient(180deg, #2E7D32 0%, #1B5E20 100%);
+  --gradient-xibalba-myst: linear-gradient(135deg, #4A148C 0%, #0A0A0A 100%);
+  
+  /* Legacy variables para compatibilidad */
+  --bg-deep: var(--color-bg-primary);
+  --glow: var(--color-primary);
+}
+
+html, body {
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* === CLASES UTILITARIAS GLOBALES === */
+.container-fluid {
+  @apply w-full max-w-none px-4 sm:px-6 lg:px-8;
+}
+
+.container-narrow {
+  @apply max-w-4xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.text-gradient-maya {
+  background: var(--gradient-maya-sunset);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bg-glass {
+  background: var(--color-bg-card);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--color-border);
+}
+
+.shadow-cultural {
+  box-shadow: 
+    0 4px 25px -5px rgba(255, 215, 0, 0.1),
+    0 10px 10px -5px rgba(30, 193, 184, 0.04);
+}
+
+.transition-cultural {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Parallax stage */
+.parallax-stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+  will-change: transform, opacity;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.8;
+}
+
+/* Layer assets */
+.layer-sky {
+  background-image: 
+    radial-gradient(1200px 600px at 50% -10%, rgba(30,193,184,0.15), transparent), 
+    radial-gradient(900px 500px at 20% 10%, rgba(255,165,0,0.12), transparent),
+    radial-gradient(900px 500px at 80% 20%, rgba(255,111,0,0.10), transparent),
+    linear-gradient(180deg, #020308 0%, #05060f 40%, #07070b 60%, #000 100%);
+}
+
+/* Silueta copa de ceiba */
+.layer-canopy {
+  background-image: url('data:image/svg+xml;utf8,\
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">\
+      <defs>\
+        <radialGradient id="g" cx="50%" cy="35%" r="60%">\
+          <stop offset="0%" stop-color="%231EC1B833"/>\
+          <stop offset="100%" stop-color="%23000"/>\
+        </radialGradient>\
+      </defs>\
+      <rect width="1440" height="900" fill="url(%23g)"/>\
+      <g fill="%230a0a12">\
+        <ellipse cx="300" cy="280" rx="260" ry="170"/>\
+        <ellipse cx="540" cy="220" rx="240" ry="150"/>\
+        <ellipse cx="820" cy="260" rx="260" ry="170"/>\
+        <ellipse cx="1100" cy="240" rx="220" ry="150"/>\
+      </g>\
+    </svg>');
+  background-size: cover;
+  background-position: top center;
+}
+
+/* Tronco texturizado */
+.layer-trunk {
+  background-image: 
+    linear-gradient(180deg, rgba(20,14,10,0) 0%, rgba(20,14,10,0.4) 30%, rgba(20,14,10,0.6) 60%, rgba(20,14,10,0.8) 100%),
+    url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1600&auto=format&fit=crop');
+  background-position: center top;
+  filter: contrast(1.05) brightness(0.8);
+}
+
+/* Raíces / cueva */
+.layer-roots {
+  background-image: 
+    radial-gradient(60% 40% at 50% 90%, rgba(30,193,184,0.18), transparent 60%),
+    radial-gradient(40% 30% at 30% 75%, rgba(30,193,184,0.12), transparent 60%),
+    url('https://images.unsplash.com/photo-1523419409543-8c1a9cc1b0b5?q=80&w=1600&auto=format&fit=crop');
+  background-position: center bottom;
+  filter: brightness(0.5) contrast(1.1);
+}
+
+/* Petals canvas overlay */
+#petalsCanvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Section dividers */
+.divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,111,0,0.6), transparent);
+}
+
+/* Reduce-motion respect */
+@media (prefers-reduced-motion: reduce) {
+  .layer,
+  [data-aos] {
+    transition: none !important;
+    animation: none !important;
+  }
+}

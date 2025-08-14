@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hanal Pixán – La Ceiba y el Pib Familiar</title>
+  <meta name="description" content="Página documental inmersiva sobre Hanal Pixán en Mérida, el pib familiar y la travesía simbólica por la Ceiba hacia Xibalbá. Tailwind, parallax y pétalos." />
+  <meta property="og:title" content="Hanal Pixán – La Ceiba y el Pib Familiar" />
+  <meta property="og:description" content="Scroll storytelling: desde la copa de la ceiba hasta Xibalbá. Receta y tradición del pib familiar." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%23FF6F00'/%3E%3Cpath d='M32 10c7 9 11 12 11 17 0 7-5 12-11 12S21 34 21 27c0-5 4-8 11-17z' fill='white'/%3E%3C/svg%3E" />
+
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { theme: { extend: { colors: { accent: { DEFAULT: '#FF6F00', soft: '#FFA500' }, cenote: '#1EC1B8' } } } };</script>
+
+  <!-- AOS for scroll reveal -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+  <style>
+    /* Base backgrounds */
+    :root { --bg-deep:#000; --glow:#1EC1B8; }
+    html, body { background:#000; color:#f6f6f6; scroll-behavior:smooth; }
+
+    /* Parallax stage */
+    .parallax-stage { position: fixed; inset:0; overflow:hidden; pointer-events:none; z-index:-1; }
+    .layer { position:absolute; inset:0; will-change: transform, opacity; background-repeat:no-repeat; background-size:cover; background-position:center; opacity:0.8; }
+
+    /* Layer assets (you puedes sustituir por tus imágenes propias) */
+    .layer-sky { background-image: radial-gradient(1200px 600px at 50% -10%, rgba(30,193,184,0.15), transparent), 
+                                 radial-gradient(900px 500px at 20% 10%, rgba(255,165,0,0.12), transparent),
+                                 radial-gradient(900px 500px at 80% 20%, rgba(255,111,0,0.10), transparent),
+                                 linear-gradient(180deg, #020308 0%, #05060f 40%, #07070b 60%, #000 100%);
+    }
+    /* Silueta copa de ceiba (SVG embebido como background) */
+    .layer-canopy { background-image: url('data:image/svg+xml;utf8,\
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">\
+        <defs>\
+          <radialGradient id="g" cx="50%" cy="35%" r="60%">\
+            <stop offset="0%" stop-color="%231EC1B833"/>\
+            <stop offset="100%" stop-color="%23000"/>\
+          </radialGradient>\
+        </defs>\
+        <rect width="1440" height="900" fill="url(%23g)"/>\
+        <g fill="%230a0a12">\
+          <ellipse cx="300" cy="280" rx="260" ry="170"/>\
+          <ellipse cx="540" cy="220" rx="240" ry="150"/>\
+          <ellipse cx="820" cy="260" rx="260" ry="170"/>\
+          <ellipse cx="1100" cy="240" rx="220" ry="150"/>\
+        </g>\
+      </svg>');
+      background-size: cover; background-position: top center;
+    }
+    /* Tronco texturizado */
+    .layer-trunk { background-image: linear-gradient(180deg, rgba(20,14,10,0) 0%, rgba(20,14,10,0.4) 30%, rgba(20,14,10,0.6) 60%, rgba(20,14,10,0.8) 100%),
+                   url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?q=80&w=1600&auto=format&fit=crop');
+      background-position: center top; filter: contrast(1.05) brightness(0.8);
+    }
+    /* Raíces / cueva */
+    .layer-roots { background-image: radial-gradient(60% 40% at 50% 90%, rgba(30,193,184,0.18), transparent 60%),
+                   radial-gradient(40% 30% at 30% 75%, rgba(30,193,184,0.12), transparent 60%),
+                   url('https://images.unsplash.com/photo-1523419409543-8c1a9cc1b0b5?q=80&w=1600&auto=format&fit=crop');
+      background-position:center bottom; filter: brightness(0.5) contrast(1.1);
+    }
+
+    /* Petals canvas overlay */
+    #petalsCanvas { position: fixed; inset:0; pointer-events:none; z-index:1; }
+
+    /* Section dividers */
+    .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,111,0,0.6), transparent); }
+
+    /* Reduce-motion respect */
+    @media (prefers-reduced-motion: reduce) {
+      .layer, [data-aos] { transition:none !important; animation:none !important; }
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-accent/20 selection:text-white">
+  <!-- Parallax global layers -->
+  <div class="parallax-stage" aria-hidden="true">
+    <div class="layer layer-sky" id="sky"></div>
+    <div class="layer layer-canopy" id="canopy"></div>
+    <div class="layer layer-trunk" id="trunk"></div>
+    <div class="layer layer-roots" id="roots"></div>
+  </div>
+  <canvas id="petalsCanvas" aria-hidden="true"></canvas>
+
+  <!-- Header simple -->
+  <header class="sticky top-0 z-20 backdrop-blur bg-black/40 border-b border-white/5">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#inicio" class="font-semibold tracking-wide text-accent">HANAL PIXÁN</a>
+      <nav class="hidden md:flex gap-6 text-sm text-white/80">
+        <a class="hover:text-accent-soft transition" href="#significado">Significado</a>
+        <a class="hover:text-accent-soft transition" href="#pib">El Pib</a>
+        <a class="hover:text-accent-soft transition" href="#ofrendas">Ofrendas</a>
+        <a class="hover:text-accent-soft transition" href="#xibalba">Xibalbá</a>
+        <a class="hover:text-accent-soft transition" href="#creditos">Créditos</a>
+      </nav>
+      <a href="#pib" class="px-4 py-2 rounded-full bg-accent/90 hover:bg-accent transition shadow-lg shadow-accent/30 text-sm font-medium">Ver receta</a>
+    </div>
+  </header>
+
+  <!-- HERO / COPA -->
+  <section id="inicio" class="relative min-h-[92vh] flex items-center">
+    <div class="mx-auto max-w-5xl px-6 text-center">
+      <h1 class="text-4xl sm:text-6xl font-extrabold leading-tight" data-aos="fade-up">
+        Hanal Pixán: <span class="text-accent-soft">La Comida de las Ánimas</span>
+      </h1>
+      <p class="mt-4 text-white/80 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+        Un descenso ritual guiado por la <span class="text-accent">Ceiba Sagrada</span>: de la copa al tronco y hasta las raíces, donde honramos a quienes regresan y compartimos el <em>pib</em> de nuestra familia.
+      </p>
+      <div class="mt-8" data-aos="zoom-in" data-aos-delay="200">
+        <a href="#significado" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 hover:bg-white/15 ring-1 ring-white/10 backdrop-blur transition">
+          Iniciar descenso
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 5v14m0 0l-6-6m6 6l6-6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SIGNIFICADO / TRONCO -->
+  <section id="significado" class="relative py-24">
+    <div class="mx-auto max-w-6xl px-6 grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <h2 class="text-3xl font-bold mb-4" data-aos="fade-right">¿Qué es Hanal Pixán?</h2>
+        <p class="text-white/80 leading-relaxed" data-aos="fade-right" data-aos-delay="100">
+          <strong>Hanal Pixán</strong> significa “comida de las ánimas”. Se celebra en Yucatán, Campeche y Quintana Roo del 31 de octubre al 2 de noviembre. Durante estos días, se cree que las almas visitan a sus familias para convivir y disfrutar de las ofrendas: velas, flores, fotografías y sus platillos favoritos.
+        </p>
+        <ul class="mt-6 space-y-3 text-white/80" data-aos="fade-right" data-aos-delay="150">
+          <li>• Altares adornados con flores, velas y retratos.</li>
+          <li>• Comidas típicas: <em>mucbipollo</em> (pib), atole, dulce de calabaza y frutas.</li>
+          <li>• Rezos y convivencia familiar.</li>
+          <li>• Paseo de las Ánimas (Mérida) y limpieza de huesos en Pomuch.</li>
+        </ul>
+      </div>
+      <figure class="rounded-2xl overflow-hidden ring-1 ring-white/10" data-aos="fade-left">
+        <img alt="Altar tradicional yucateco" class="w-full h-80 object-cover" src="https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?q=80&w=1200&auto=format&fit=crop"/>
+        <figcaption class="px-4 py-3 text-xs text-white/60 bg-white/5">Altar familiar con velas y flores de cempasúchil.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PIB / RAICES SUPERFICIALES -->
+  <section id="pib" class="relative py-24">
+    <div class="mx-auto max-w-6xl px-6">
+      <h2 class="text-3xl font-bold mb-10" data-aos="fade-up">El Pib Familiar (Mucbipollo)</h2>
+      <div class="grid lg:grid-cols-3 gap-6">
+        <!-- Paso 1 -->
+        <article class="p-6 rounded-2xl bg-white/5 ring-1 ring-white/10 backdrop-blur" data-aos="fade-up">
+          <h3 class="font-semibold text-accent-soft">1. Ingredientes</h3>
+          <p class="mt-2 text-white/80 text-sm">Masa de maíz, recaudo rojo, pollo/pavo, tomate, cebolla, epazote y hojas de plátano.</p>
+        </article>
+        <!-- Paso 2 -->
+        <article class="p-6 rounded-2xl bg-white/5 ring-1 ring-white/10 backdrop-blur" data-aos="fade-up" data-aos-delay="50">
+          <h3 class="font-semibold text-accent-soft">2. Preparación</h3>
+          <p class="mt-2 text-white/80 text-sm">Se sazona el guiso, se amasa y se forma el pib; se envuelve con hojas soasadas.</p>
+        </article>
+        <!-- Paso 3 -->
+        <article class="p-6 rounded-2xl bg-white/5 ring-1 ring-white/10 backdrop-blur" data-aos="fade-up" data-aos-delay="100">
+          <h3 class="font-semibold text-accent-soft">3. Cocción en tierra</h3>
+          <p class="mt-2 text-white/80 text-sm">Se hornea en <em>pib</em> (hornilla bajo tierra) cubierto con hojas y tierra; sabor ahumado único.</p>
+        </article>
+      </div>
+
+      <!-- Galería -->
+      <div class="mt-10 grid md:grid-cols-3 gap-4" data-aos="zoom-in">
+        <img class="h-48 w-full object-cover rounded-xl ring-1 ring-white/10" alt="Amasado del pib" src="https://images.unsplash.com/photo-1490474418585-ba9bad8fd0ea?q=80&w=1200&auto=format&fit=crop"/>
+        <img class="h-48 w-full object-cover rounded-xl ring-1 ring-white/10" alt="Hojas de plátano" src="https://images.unsplash.com/photo-1555243896-c709bfa0b564?q=80&w=1200&auto=format&fit=crop"/>
+        <img class="h-48 w-full object-cover rounded-xl ring-1 ring-white/10" alt="Cocción bajo tierra" src="https://images.unsplash.com/photo-1586201375754-1421e0aa2fda?q=80&w=1200&auto=format&fit=crop"/>
+      </div>
+
+      <div class="mt-8 flex flex-wrap gap-3" data-aos="fade-up">
+        <a href="#" class="px-4 py-2 rounded-full bg-accent hover:bg-accent-soft transition text-sm font-medium">Descargar receta (PDF)</a>
+        <a href="#xibalba" class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/15 ring-1 ring-white/10 text-sm font-medium">Continuar descenso</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- OFRENDAS / CAMARAS SUBTERRANEAS -->
+  <section id="ofrendas" class="relative py-24">
+    <div class="mx-auto max-w-6xl px-6">
+      <h2 class="text-3xl font-bold mb-8" data-aos="fade-up">Mesa de Ofrendas y Sabores</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="p-5 rounded-2xl bg-white/5 ring-1 ring-white/10" data-aos="flip-left"><h3 class="font-semibold text-accent-soft">Mucbipollo</h3><p class="text-white/80 text-sm mt-2">Protagonista de la mesa; masa y guiso envueltos en hoja de plátano.</p></div>
+        <div class="p-5 rounded-2xl bg-white/5 ring-1 ring-white/10" data-aos="flip-left" data-aos-delay="50"><h3 class="font-semibold text-accent-soft">Atole</h3><p class="text-white/80 text-sm mt-2">Bebida tibia para el alma: maíz, canela y piloncillo.</p></div>
+        <div class="p-5 rounded-2xl bg-white/5 ring-1 ring-white/10" data-aos="flip-left" data-aos-delay="100"><h3 class="font-semibold text-accent-soft">Dulce de calabaza</h3><p class="text-white/80 text-sm mt-2">Cocido lentamente con canela y clavo.</p></div>
+        <div class="p-5 rounded-2xl bg-white/5 ring-1 ring-white/10" data-aos="flip-left" data-aos-delay="150"><h3 class="font-semibold text-accent-soft">Frutas</h3><p class="text-white/80 text-sm mt-2">Naranja, mandarina y plátano; aromas que guían el regreso.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- XIBALBA / CENOTE -->
+  <section id="xibalba" class="relative py-28">
+    <div class="mx-auto max-w-4xl px-6 text-center">
+      <h2 class="text-3xl font-bold mb-6" data-aos="fade-up">Xibalbá – Memoria y Presencia</h2>
+      <p class="text-white/80" data-aos="fade-up" data-aos-delay="100">En la oscuridad, el brillo turquesa del cenote nos recuerda el tránsito entre mundos. Aquí colocamos las fotos de quienes amamos.</p>
+
+      <div class="mt-10 grid sm:grid-cols-2 gap-6" data-aos="zoom-in">
+        <div class="p-6 rounded-2xl bg-black/60 ring-1 ring-cenote/30">
+          <img class="w-full h-52 object-cover rounded-lg mb-3" alt="Retrato enmarcado" src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1200&auto=format&fit=crop"/>
+          <p class="text-sm text-white/70">"Mientras haya memoria, hay camino de regreso."</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-black/60 ring-1 ring-cenote/30">
+          <img class="w-full h-52 object-cover rounded-lg mb-3" alt="Velas encendidas" src="https://images.unsplash.com/photo-1470115636492-6d2b56f9146e?q=80&w=1200&auto=format&fit=crop"/>
+          <p class="text-sm text-white/70">"Compartimos el pan y el tiempo: los vivos y las ánimas."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="creditos" class="border-t border-white/5 py-10">
+    <div class="mx-auto max-w-6xl px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/60">
+      <p>© 2025 Hanal Pixán – Proyecto familiar. Hecho con respeto a la tradición maya yucateca.</p>
+      <div class="flex gap-4">
+        <a class="hover:text-accent-soft" href="#inicio">Inicio</a>
+        <a class="hover:text-accent-soft" href="#pib">Receta</a>
+        <a class="hover:text-accent-soft" href="#xibalba">Xibalbá</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true, duration: 700, easing: 'ease-out-cubic' });
+
+    // Simple parallax controller
+    const layers = {
+      sky: { el: document.getElementById('sky'), factor: 0.1 },
+      canopy: { el: document.getElementById('canopy'), factor: 0.25 },
+      trunk: { el: document.getElementById('trunk'), factor: 0.45 },
+      roots: { el: document.getElementById('roots'), factor: 0.7 }
+    };
+
+    const onScroll = () => {
+      const y = window.scrollY || document.documentElement.scrollTop;
+      for (const k in layers) {
+        const { el, factor } = layers[k];
+        el.style.transform = `translate3d(0, ${-y * factor}px, 0)`;
+        // Oscurecer gradualmente hacia las raíces
+        if (k === 'roots') el.style.opacity = Math.min(1, 0.3 + y / 1200);
+      }
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Petals animation (Canvas)
+    const canvas = document.getElementById('petalsCanvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, petals = [];
+
+    function resize() {
+      W = canvas.width = window.innerWidth * devicePixelRatio;
+      H = canvas.height = window.innerHeight * devicePixelRatio;
+    }
+    window.addEventListener('resize', resize); resize();
+
+    function spawnPetal() {
+      const speed = 0.3 + Math.random()*0.8;
+      petals.push({
+        x: Math.random()*W,
+        y: -20 * devicePixelRatio,
+        s: (6 + Math.random()*10) * devicePixelRatio,
+        vx: (-0.3 + Math.random()*0.6) * devicePixelRatio,
+        vy: speed * devicePixelRatio,
+        rot: Math.random()*Math.PI*2,
+        vr: (-0.02 + Math.random()*0.04)
+      });
+    }
+
+    function drawPetal(p) {
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.beginPath();
+      // Petalo estilizado
+      ctx.moveTo(0, 0);
+      ctx.quadraticCurveTo(p.s*0.8, -p.s*0.6, 0, -p.s);
+      ctx.quadraticCurveTo(-p.s*0.8, -p.s*0.6, 0, 0);
+      ctx.fillStyle = 'rgba(255, 165, 0, 0.7)';
+      ctx.fill();
+      ctx.restore();
+    }
+
+    let last = 0; const rate = 1000/60;
+    function loop(t) {
+      if (t - last > rate) {
+        ctx.clearRect(0,0,W,H);
+        if (petals.length < 60 && Math.random() < 0.6) spawnPetal();
+        petals.forEach(p => {
+          p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+        });
+        petals = petals.filter(p => p.y < H + 40);
+        petals.forEach(drawPetal);
+        last = t;
+      }
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<header class="sticky top-0 z-20 backdrop-blur bg-black/40 border-b border-white/5">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <a 
+      routerLink="/" 
+      class="font-semibold tracking-wide text-accent hover:text-accent-soft transition-colors"
+    >
+      HANAL PIXÁN
+    </a>
+    
+    <nav class="hidden md:flex gap-6 text-sm text-white/80">
+      @for (item of navItems(); track item.href) {
+        <a 
+          [href]="item.href"
+          class="hover:text-accent-soft transition-colors duration-200"
+          [class.text-accent-soft]="isActiveSection() === item.section"
+        >
+          {{ item.label }}
+        </a>
+      }
+    </nav>
+    
+    <a 
+      href="#pib" 
+      class="px-4 py-2 rounded-full bg-accent/90 hover:bg-accent transition-colors 
+             shadow-lg shadow-accent/30 text-sm font-medium"
+    >
+      Ver receta
+    </a>
+  </div>
+</header>

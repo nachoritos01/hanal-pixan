@@ -1,0 +1,126 @@
+<app-navbar />
+
+<main class="pt-16 min-h-screen">
+  <div class="mx-auto max-w-6xl px-6 py-12">
+    
+    <!-- Header -->
+    <header class="text-center mb-12">
+      <h1 class="text-4xl font-bold mb-4">
+        Receta del <span class="text-accent-soft">Pib Familiar</span>
+      </h1>
+      <p class="text-white/80 max-w-2xl mx-auto">
+        El mucbipollo es el corazón de Hanal Pixán. Aprende a preparar esta delicia tradicional yucateca paso a paso.
+      </p>
+    </header>
+
+    <!-- Recipe Calculator -->
+    <section class="mb-12">
+      <app-card variant="accent" customClasses="max-w-md mx-auto">
+        <h3 class="font-semibold mb-4">Calculadora de porciones</h3>
+        <form [formGroup]="portionsForm" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium mb-2">Número de personas</label>
+            <input 
+              type="number" 
+              formControlName="portions"
+              min="2" 
+              max="20"
+              class="w-full px-3 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:border-accent focus:outline-none"
+              placeholder="8"
+            />
+          </div>
+          <div class="text-center">
+            <p class="text-accent-soft font-medium">
+              Porciones calculadas: {{ calculatedPortions() }}
+            </p>
+          </div>
+        </form>
+      </app-card>
+    </section>
+
+    <!-- Ingredients -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">Ingredientes</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-accent-soft">Para la masa</h3>
+          <div class="space-y-2">
+            @for (ingredient of massaIngredients(); track ingredient.name) {
+              <div class="flex justify-between items-center py-2 px-3 rounded-lg bg-white/5">
+                <span [class.font-semibold]="ingredient.essential">{{ ingredient.name }}</span>
+                <span class="text-accent">{{ ingredient.amount }} {{ ingredient.unit }}</span>
+              </div>
+            }
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-4 text-accent-soft">Para el guiso</h3>
+          <div class="space-y-2">
+            @for (ingredient of fillingIngredients(); track ingredient.name) {
+              <div class="flex justify-between items-center py-2 px-3 rounded-lg bg-white/5">
+                <span [class.font-semibold]="ingredient.essential">{{ ingredient.name }}</span>
+                <span class="text-accent">{{ ingredient.amount }} {{ ingredient.unit }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Steps -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">Preparación</h2>
+      <div class="space-y-6">
+        @for (step of recipeSteps(); track step.title; let i = $index) {
+          <app-card variant="default">
+            <div class="flex gap-4">
+              <div class="flex-shrink-0">
+                <div class="w-8 h-8 rounded-full bg-accent text-black flex items-center justify-center font-bold text-sm">
+                  {{ i + 1 }}
+                </div>
+              </div>
+              <div class="flex-1">
+                <h3 class="font-semibold mb-2">{{ step.title }}</h3>
+                @if (step.duration) {
+                  <p class="text-xs text-accent-soft mb-2">⏱️ {{ step.duration }}</p>
+                }
+                <p class="text-white/80 mb-2">{{ step.description }}</p>
+                @if (step.tips) {
+                  <div class="mt-3 p-3 bg-cenote/10 rounded-lg border-l-4 border-cenote">
+                    <p class="text-sm text-cenote">💡 <strong>Tip:</strong> {{ step.tips }}</p>
+                  </div>
+                }
+              </div>
+            </div>
+          </app-card>
+        }
+      </div>
+    </section>
+
+    <!-- Traditional Notes -->
+    <section class="mb-12">
+      <app-card variant="glass">
+        <h2 class="text-xl font-bold mb-4 text-accent-soft">Notas Tradicionales</h2>
+        <div class="space-y-4 text-white/80">
+          <p>
+            El <strong>pib</strong> (que significa "horno bajo tierra" en maya) es más que una técnica de cocción: 
+            es un ritual que conecta a las familias con sus ancestros y la madre tierra.
+          </p>
+          <p>
+            Tradicionalmente, el pib se prepara durante Hanal Pixán para alimentar tanto a los vivos como a las ánimas 
+            que regresan a visitar. Cada familia tiene sus propios secretos y variaciones transmitidos de generación en generación.
+          </p>
+          <p>
+            <strong>Variaciones regionales:</strong> En Campeche suele llevar más épazote, 
+            en Quintana Roo a veces se agrega achiote extra, y en algunas comunidades de Yucatán 
+            incluyen chile habanero para los más valientes.
+          </p>
+        </div>
+      </app-card>
+    </section>
+
+  </div>
+</main>
+
+<app-footer />

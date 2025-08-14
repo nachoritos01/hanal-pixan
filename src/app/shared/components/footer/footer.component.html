@@ -1,0 +1,15 @@
+<footer id="creditos" class="border-t border-white/5 py-10">
+  <div class="mx-auto max-w-6xl px-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/60">
+    <p>{{ copyrightText() }}</p>
+    <div class="flex gap-4">
+      @for (link of footerLinks(); track link.href) {
+        <a 
+          [href]="link.href" 
+          class="hover:text-accent-soft transition-colors duration-200"
+        >
+          {{ link.label }}
+        </a>
+      }
+    </div>
+  </div>
+</footer>

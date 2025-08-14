@@ -1,0 +1,146 @@
+<app-navbar />
+
+<main class="pt-16 min-h-screen">
+  <div class="mx-auto max-w-4xl px-6 py-12">
+    
+    <!-- Header -->
+    <header class="text-center mb-16">
+      <h1 class="text-4xl font-bold mb-6">
+        <span class="text-cenote">Xibalbá</span> – Memoria y Presencia
+      </h1>
+      <p class="text-white/80 max-w-2xl mx-auto text-lg leading-relaxed">
+        En la oscuridad, el brillo turquesa del cenote nos recuerda el tránsito entre mundos. 
+        Aquí honramos a quienes amamos y mantenemos viva su memoria.
+      </p>
+    </header>
+
+    <!-- Interactive Memorial Gallery -->
+    <section class="mb-16">
+      <div class="grid sm:grid-cols-2 gap-8">
+        @for (memorial of memorialImages(); track memorial.id; let i = $index) {
+          <app-card 
+            variant="cenote" 
+            customClasses="cursor-pointer transform transition-all duration-300 hover:scale-105"
+            (click)="selectMemorial(memorial.id)"
+          >
+            <img 
+              [src]="memorial.src"
+              [alt]="memorial.alt"
+              class="w-full h-64 object-cover rounded-lg mb-4"
+              loading="lazy"
+            />
+            <blockquote class="text-sm text-white/90 italic mb-4">
+              "{{ memorial.quote }}"
+            </blockquote>
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-cenote font-medium">{{ memorial.category }}</span>
+              <button 
+                [class]="'text-xs px-3 py-1 rounded-full transition-colors ' + (selectedMemorial() === memorial.id ? 'bg-cenote text-black' : 'bg-white/10 text-white hover:bg-white/20')"
+              >
+                {{ selectedMemorial() === memorial.id ? 'Seleccionado' : 'Ver más' }}
+              </button>
+            </div>
+          </app-card>
+        }
+      </div>
+    </section>
+
+    <!-- Memorial Details -->
+    @if (selectedMemorialData(); as memorial) {
+      <section class="mb-16">
+        <app-card variant="glass" customClasses="border-l-4 border-cenote">
+          <h3 class="text-xl font-bold mb-4 text-cenote">{{ memorial.title }}</h3>
+          <p class="text-white/80 mb-4">{{ memorial.description }}</p>
+          <div class="grid md:grid-cols-3 gap-4 mb-4">
+            @for (detail of memorial.details; track detail) {
+              <div class="text-center p-3 bg-white/5 rounded-lg">
+                <p class="text-xs text-white/60 mb-1">{{ detail.label }}</p>
+                <p class="text-sm font-medium">{{ detail.value }}</p>
+              </div>
+            }
+          </div>
+          <button 
+            (click)="closeMemorialDetails()"
+            class="w-full mt-4 py-2 rounded-lg bg-cenote/20 hover:bg-cenote/30 text-cenote transition-colors"
+          >
+            Cerrar
+          </button>
+        </app-card>
+      </section>
+    }
+
+    <!-- Ritual Elements -->
+    <section class="mb-16">
+      <h2 class="text-2xl font-bold mb-8 text-center">Elementos del Ritual</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        @for (element of ritualElements(); track element.name) {
+          <app-card 
+            variant="default"
+            [class]="'text-center transform transition-all duration-500 hover:scale-105 ' + (element.isActive() ? 'ring-2 ring-cenote' : '')"
+            (click)="toggleRitualElement(element.name)"
+          >
+            <div class="text-4xl mb-4">{{ element.icon }}</div>
+            <h3 class="font-semibold mb-2 text-accent-soft">{{ element.name }}</h3>
+            <p class="text-white/80 text-sm mb-4">{{ element.description }}</p>
+            <div [class]="'text-xs px-3 py-1 rounded-full transition-colors ' + (element.isActive() ? 'bg-cenote text-black' : 'bg-white/10 text-white')">
+              {{ element.isActive() ? 'Activado' : 'Inactivo' }}
+            </div>
+          </app-card>
+        }
+      </div>
+    </section>
+
+    <!-- Cenote Visualization -->
+    <section class="mb-16">
+      <app-card variant="cenote" customClasses="relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-radial from-cenote/20 via-transparent to-black/60"></div>
+        <div class="relative z-10 text-center py-12">
+          <h3 class="text-2xl font-bold mb-4 text-cenote">El Cenote Sagrado</h3>
+          <p class="text-white/80 mb-6 max-w-md mx-auto">
+            Portal entre el mundo de los vivos y Xibalbá, donde las aguas turquesas reflejan las estrellas 
+            y permiten el encuentro con nuestros ancestros.
+          </p>
+          <div class="relative mx-auto w-32 h-32 mb-6">
+            <div 
+              class="absolute inset-0 rounded-full bg-gradient-radial from-cenote via-cenote/60 to-transparent animate-pulse"
+              [style.animation-duration]="cenoteAnimationDuration() + 'ms'"
+            ></div>
+            <div class="absolute inset-4 rounded-full bg-cenote/30 backdrop-blur"></div>
+            <div class="absolute inset-8 rounded-full bg-cenote/60"></div>
+          </div>
+          <button 
+            (click)="activateCenoteRitual()"
+            [disabled]="isRitualActive()"
+            class="px-6 py-2 rounded-full bg-cenote hover:bg-cenote/80 text-black font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {{ ritualButtonText() }}
+          </button>
+        </div>
+      </app-card>
+    </section>
+
+    <!-- Spiritual Reflection -->
+    <section class="mb-16">
+      <app-card variant="glass">
+        <h2 class="text-xl font-bold mb-6 text-accent-soft">Reflexión Espiritual</h2>
+        <div class="space-y-4 text-white/80">
+          <p>
+            En la tradición maya, <strong>Xibalbá</strong> no es un lugar de castigo, sino de transformación y encuentro. 
+            Es el reino donde las almas continúan su camino, manteniendo la conexión con sus familias a través del amor y la memoria.
+          </p>
+          <p>
+            Durante Hanal Pixán, esta conexión se fortalece. Los aromas del pib, el calor de las velas y la presencia 
+            de los retratos familiares crean un puente invisible pero real entre los mundos.
+          </p>
+          <blockquote class="border-l-4 border-cenote pl-4 italic">
+            "La muerte no nos roba los seres amados. Al contrario, nos los guarda y nos los inmortaliza en el recuerdo. 
+            La vida sí que nos los roba muchas veces y definitivamente."
+          </blockquote>
+        </div>
+      </app-card>
+    </section>
+
+  </div>
+</main>
+
+<app-footer />
