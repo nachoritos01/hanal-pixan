@@ -83,14 +83,19 @@ INSTRUCCIONES PRINCIPALES:
 
 10. OPTIMIZACIONES ESPECÍFICAS ANGULAR 20:
     - Framework CSS: detectar y mantener (Bootstrap, TailwindCSS, etc.)
-    - Configuración Tailwind personalizada con design tokens culturales
+    - Configuración Tailwind personalizada con design tokens adaptados al proyecto
     - Sistema de colores escalable con CSS custom properties
+    - Sistema de iconos robusto (Lucide Icons con múltiples estrategias de carga)
+    - Layout centralizado con componente orquestador para elementos comunes
+    - RouterLinkActive automático para estados de navegación activos
     - Formularios reactivos si hay forms en el HTML
     - Animaciones: mantener las existentes, mejorar con Angular Animations
     - Assets: optimizar imágenes y recursos estáticos
     - Build optimizado con el nuevo sistema @angular/build
     - Tree-shaking automático mejorado
     - Configuración @tailwindcss/typography para contenido tipográfico
+    - Scroll-to-top con signals para UX mejorada
+    - Footer expandido con navegación, enlaces externos y redes sociales según el dominio
 
 REQUERIMIENTOS ESPECÍFICOS DE COMPATIBILIDAD:
 
@@ -126,12 +131,20 @@ CONFIGURACIÓN CRÍTICA PARA EVITAR ERRORES ERESOLVE:
 4. NUNCA usar moduleResolution: "node" en tsconfig
 5. NUNCA usar Tailwind CSS v4+ (incompatible con Angular 20)
 6. NUNCA usar @import en Sass (deprecado en Dart Sass 3.0)
-7. SIEMPRE verificar compatibilidad Zone.js 0.15.0
-8. SIEMPRE usar @angular/build para builder moderno
-9. SIEMPRE usar Tailwind CSS v3.4.17 con PostCSS
-10. SIEMPRE usar @use en lugar de @import en Sass
-11. SIEMPRE separar templates HTML de TypeScript
-12. SIEMPRE usar standalone: true en componentes nuevos
+7. NUNCA usar text-inverse con color negro (debe ser blanco #FFFFFF)
+8. NUNCA usar inline templates en componentes (siempre templateUrl)
+9. NUNCA importar RouterLinkActive sin agregarlo a imports
+10. SIEMPRE verificar compatibilidad Zone.js 0.15.0
+11. SIEMPRE usar @angular/build para builder moderno
+12. SIEMPRE usar Tailwind CSS v3.4.17 con PostCSS
+13. SIEMPRE usar @use en lugar de @import en Sass
+14. SIEMPRE separar templates HTML de TypeScript
+15. SIEMPRE usar standalone: true en componentes nuevos
+16. SIEMPRE implementar múltiples estrategias de carga para iconos
+17. SIEMPRE usar routerLinkActiveOptions="{ exact: true }" para rutas raíz
+18. SIEMPRE crear layout orquestador para elementos comunes
+19. SIEMPRE preferir text-inverse sobre text-primary para mayor claridad semántica
+20. SIEMPRE usar text-inverse en botones con fondos coloridos para mejor contraste
 
 TIPOS DE APLICACIÓN SOPORTADOS:
 
@@ -278,12 +291,13 @@ module.exports = {
   --color-accent-rgb: 255, 215, 0;
   
   /* === TEXTOS Y FONDOS === */
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: #E0E0E0;
-  --color-text-muted: #9E9E9E;
-  --color-bg-primary: #000000;
-  --color-bg-secondary: #0A0A0A;
-  --color-bg-card: rgba(20, 20, 20, 0.8);
+  --color-text-primary: #FFFFFF;        /* Texto principal */
+  --color-text-secondary: #E0E0E0;      /* Texto secundario */
+  --color-text-muted: #9E9E9E;          /* Texto terciario */
+  --color-text-inverse: #FFFFFF;        /* PREFERIR: Texto sobre fondos coloridos */
+  --color-bg-primary: #000000;          /* Fondo principal negro */
+  --color-bg-secondary: #0A0A0A;        /* Fondo secundario */
+  --color-bg-card: rgba(20, 20, 20, 0.8);  /* Cards semi-transparentes */
   
   /* === BORDES === */
   --color-border: rgba(255, 255, 255, 0.1);
@@ -321,6 +335,47 @@ html, body {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 ```
+
+## 🎨 **Buenas Prácticas de Colores Angular 20**
+
+### Jerarquía Semántica de Texto
+```html
+<!-- ✅ PREFERIR: Uso semánticamente correcto -->
+<button class="bg-maya-orange text-inverse">Botón Principal</button>
+<span class="text-secondary">Información secundaria</span>
+<small class="text-muted">Metadatos y texto terciario</small>
+
+<!-- ❌ EVITAR: Menos específico semánticamente -->
+<button class="bg-maya-orange text-primary">Botón Principal</button>
+```
+
+### Casos de Uso por Clase
+1. **`text-inverse`** → PREFERIR para texto sobre fondos coloridos/oscuros
+2. **`text-primary`** → Alternativo para texto principal (mismo color que inverse)
+3. **`text-secondary`** → Texto menos importante, gris claro (#E0E0E0)
+4. **`text-muted`** → Metadatos, timestamps, texto terciario (#9E9E9E)
+
+### Ejemplos Prácticos
+```html
+<!-- Botones con fondos coloridos -->
+<button class="bg-maya-orange text-inverse">Ver Receta</button>
+<button class="bg-cenote-blue text-inverse">Activar Memorial</button>
+
+<!-- Cards y contenedores -->
+<div class="bg-bg-primary text-inverse">Layout Principal</div>
+<div class="bg-card text-inverse">Card Content</div>
+
+<!-- Jerarquía de información -->
+<h1 class="text-inverse">Título Principal</h1>
+<p class="text-secondary">Descripción secundaria</p>
+<span class="text-muted">Fecha de publicación</span>
+```
+
+### Contraste y Accesibilidad
+- **text-inverse (#FFFFFF)** sobre fondos oscuros: ✅ WCAG AAA
+- **text-secondary (#E0E0E0)** sobre fondos negros: ✅ WCAG AA
+- **text-muted (#9E9E9E)** sobre fondos negros: ✅ WCAG AA
+- Siempre verificar contraste en herramientas de accesibilidad
 
 ## 🔧 **Package.json Template Angular 20 Compatible**
 

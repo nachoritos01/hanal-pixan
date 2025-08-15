@@ -28,10 +28,10 @@ export class CardComponent {
   
   private getVariantClasses(): string {
     const variants: Record<CardVariant, string> = {
-      default: 'bg-white/5 ring-1 ring-white/10 hover:bg-white/10',
+      default: 'bg-card ring-1 ring-border hover:bg-card',
       accent: 'bg-accent/10 ring-1 ring-accent/20 hover:bg-accent/15',
-      cenote: 'bg-cenote/10 ring-1 ring-cenote/20 hover:bg-cenote/15',
-      glass: 'bg-black/60 ring-1 ring-white/10 hover:bg-black/70'
+      cenote: 'bg-cenote-blue/10 ring-1 ring-cenote-blue/20 hover:bg-cenote-blue/15',
+      glass: 'bg-overlay ring-1 ring-border hover:bg-overlay'
     };
     
     return variants[this.variant()];

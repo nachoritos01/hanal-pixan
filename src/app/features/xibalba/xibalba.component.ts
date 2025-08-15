@@ -1,7 +1,5 @@
 import { Component, ChangeDetectionStrategy, signal, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
-import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { CardComponent } from '../../shared/components/card/card.component';
 
 interface Memorial {
@@ -27,8 +25,6 @@ interface RitualElement {
   standalone: true,
   imports: [
     CommonModule,
-    NavbarComponent,
-    FooterComponent,
     CardComponent
   ],
   templateUrl: './xibalba.component.html',

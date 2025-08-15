@@ -1,0 +1,39 @@
+<!-- Main Layout Container -->
+<div class="min-h-screen bg-bg-primary text-inverse relative overflow-x-hidden">
+  
+  <!-- Background Elements -->
+  <div class="fixed inset-0 z-0 bg-bg-primary">
+    <!-- Parallax Background Layers -->
+    <div class="layer-sky parallax-element" data-speed="0.1"></div>
+    <div class="layer-canopy parallax-element" data-speed="0.3"></div>
+    <div class="layer-trunk parallax-element" data-speed="0.5"></div>
+    <div class="layer-roots parallax-element" data-speed="0.7"></div>
+  </div>
+
+  <!-- Petals Animation Overlay -->
+  <app-petals-animation />
+
+  <!-- Navigation -->
+  <app-navbar />
+
+  <!-- Main Content Area -->
+  <main class="relative z-10 min-h-screen">
+    <router-outlet />
+  </main>
+
+  <!-- Footer -->
+  <app-footer />
+
+  <!-- Scroll to Top Button -->
+  <button
+    (click)="scrollToTop()"
+    class="fixed bottom-8 right-8 z-50 w-12 h-12 bg-maya-orange rounded-full flex items-center justify-center shadow-glow hover:scale-110 transition-all duration-300"
+    [class.opacity-0]="!showScrollButton()"
+    [class.pointer-events-none]="!showScrollButton()"
+    [class.translate-y-2]="!showScrollButton()"
+    aria-label="Volver arriba"
+  >
+    <i data-lucide="chevron-up" class="w-6 h-6 text-inverse"></i>
+  </button>
+
+</div>

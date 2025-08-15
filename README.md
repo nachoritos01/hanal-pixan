@@ -17,8 +17,11 @@ Una aplicación web Angular 20 moderna que documenta las tradiciones del **Hanal
 - **Estado Reactivo**: Angular Signals (`signal`, `computed`, `effect`)
 - **Estilos**: Tailwind CSS v3.4.17 con design tokens culturales mayas
 - **Sistema de Colores**: Variables CSS custom properties para escalabilidad
-- **Formularios**: Reactive Forms con validaciones
-- **Animaciones**: Canvas API + RequestAnimationFrame + Tailwind animations
+- **Iconografía**: Lucide Icons con carga desde CDN y fallback automático
+- **Navegación**: RouterLink y RouterLinkActive para estados activos automáticos
+- **Layout**: Sistema de layout centralizado con componente orquestador
+- **Formularios**: Reactive Forms con validaciones y signals bidireccionales
+- **Animaciones**: Canvas API + RequestAnimationFrame + Tailwind animations + AOS
 - **Testing**: Jest + Angular Testing Library
 - **TypeScript**: Configuración estricta para máxima type safety
 - **PostCSS**: Autoprefixer + Tailwind CSS optimizado para Angular 20
@@ -71,21 +74,31 @@ npm run serve            # Servir build de producción localmente
 ```
 src/
 ├── app/
-│   ├── app.component.ts|html          # Componente raíz standalone
-│   ├── app.routes.ts                  # Configuración de rutas lazy
-│   ├── features/                      # Componentes de páginas
-│   │   ├── home/                      # Página principal
-│   │   ├── pib/                       # Receta y calculadora
-│   │   └── xibalba/                   # Memorial interactivo
-│   └── shared/                        # Componentes reutilizables
+│   ├── app.component.ts|html              # Componente raíz standalone
+│   ├── app.routes.ts                      # Configuración de rutas lazy con layout
+│   ├── features/                          # Componentes de páginas (lazy loaded)
+│   │   ├── home/                          # Página principal cultural
+│   │   ├── pib/                           # Calculadora de recetas interactiva
+│   │   ├── xibalba/                       # Memorial interactivo
+│   │   ├── cultural-elements/             # Tradiciones mayas
+│   │   ├── gallery/                       # Galería familiar con masonry
+│   │   ├── testimonials/                  # Testimonios con audio player
+│   │   └── social-sharing/                # Sistema de compartir cultural
+│   └── shared/                            # Componentes reutilizables
+│       ├── layouts/
+│       │   └── main-layout/               # Layout orquestador central
 │       └── components/
-│           ├── navbar/                # Navegación responsive
-│           ├── footer/                # Footer con computed properties
-│           ├── card/                  # Sistema de variantes UI
-│           ├── parallax-background/   # Animación parallax optimizada
-│           └── petals-animation/      # Sistema de partículas
-├── styles.scss                       # Estilos globales
-└── main.ts                          # Bootstrap de la aplicación
+│           ├── navbar/                    # Navegación con routerLinkActive
+│           ├── footer/                    # Footer expandido con redes sociales
+│           ├── card/                      # Sistema de variantes UI avanzado
+│           ├── parallax-background/       # Sistema parallax multicapa
+│           └── petals-animation/          # Animación de partículas canvas
+├── assets/
+│   ├── icons/                             # Iconos Lucide personalizados
+│   └── images/                            # Recursos visuales culturales
+├── styles.scss                           # Design tokens y variables CSS
+├── index.html                             # CDN scripts (Lucide, Tailwind)
+└── main.ts                               # Bootstrap de la aplicación
 ```
 
 ### Patrones de Arquitectura Implementados
@@ -100,29 +113,133 @@ src/
 
 ## Componentes Principales
 
-### HomeComponent
-- **Estado reactivo** con signals para galleries y ofertas
-- **Integración AOS** para animaciones en scroll
-- **Descarga simulada** de recetas PDF
+### Arquitectura con Main Layout
+- **MainLayoutComponent**: Componente orquestador central con navbar, footer, petals animation y router-outlet
+- **Scroll to Top**: Botón flotante con signals para visibilidad automática basada en scroll
+- **Background Management**: Sistema de capas parallax con efectos optimizados
 
-### PibComponent  
+### Feature Components
+
+#### HomeComponent
+- **Estado reactivo** con signals para galleries y ofertas culturales
+- **Integración AOS** para animaciones en scroll suave
+- **Descarga simulada** de recetas PDF tradicionales
+
+#### PibComponent  
 - **Calculadora interactiva** de porciones con reactive forms
-- **Computed ingredients** que se ajustan automáticamente
-- **Effects** para sincronización form ↔ signals
-- **Pasos de receta** con tips tradicionales
+- **Computed ingredients** que se ajustan automáticamente por multiplicador
+- **Effects** para sincronización bidireccional form ↔ signals
+- **Pasos de receta** detallados con tips tradicionales auténticos
 
-### XibalbaComponent
-- **Estado complejo** para memorial gallery interactiva
-- **Sistema de rituales** con elementos activables
+#### XibalbaComponent
+- **Memorial gallery** interactiva con estado complejo
+- **Sistema de rituales** con elementos activables dinámicos
 - **Animaciones del cenote** con controles reactivos
-- **Gestión de contenido** dinámico
+- **Gestión de contenido** dinámico para experiencia inmersiva
 
-### Shared Components
-- **CardComponent**: Sistema de variantes (`default`, `accent`, `cenote`, `glass`)
-- **NavbarComponent**: Navegación con estado de sección activa
-- **FooterComponent**: Footer con copyright dinámico
-- **ParallaxBackgroundComponent**: Sistema de capas optimizado
-- **PetalsAnimationComponent**: Animación de partículas canvas
+#### CulturalElementsComponent
+- **Tradiciones mayas** organizadas en cards interactivas
+- **Elementos culturales** con iconos Lucide y animaciones AOS
+- **Contenido educativo** con quotes y descripciones auténticas
+
+#### GalleryComponent
+- **Masonry layout** con CSS Grid responsivo
+- **Galería de fotos** familiares con lazy loading
+- **Aspect ratios** dinámicos para diseño optimal
+
+#### TestimonialsComponent
+- **Audio testimonials** con sistema de reproducción interactivo
+- **Player controls** con estados reactivos (play/pause)
+- **Visualización de ondas** de audio con animaciones CSS
+
+#### SocialSharingComponent
+- **Sistema de compartir** en múltiples plataformas sociales
+- **Tracking de compartidas** con estadísticas familiares
+- **Call-to-action** cultural para preservación de tradiciones
+
+### Shared Components & Layout
+- **CardComponent**: Sistema de variantes avanzado (`default`, `accent`, `cenote`, `glass`)
+- **NavbarComponent**: Navegación con `routerLinkActive` automático y estilos dinámicos
+- **FooterComponent**: 
+  - Footer expandido con redes sociales (Facebook, Instagram, Twitter, YouTube, TikTok)
+  - Enlaces externos a recursos culturales (INAH, Secretaría de Cultura, etc.)
+  - Navegación completa con `routerLinkActive` para estado activo
+  - Design responsivo en grid 4 columnas
+- **ParallaxBackgroundComponent**: Sistema de capas optimizado con múltiples elementos
+- **PetalsAnimationComponent**: Sistema de partículas canvas con RequestAnimationFrame
+
+## 🎨 Sistema de Diseño y Colores
+
+### Tailwind CSS Personalizado
+El proyecto utiliza un sistema de design tokens culturales mayas:
+
+```bash
+# Archivos de configuración
+├── tailwind.config.js        # Configuración personalizada con colores mayas
+├── postcss.config.js         # PostCSS con Tailwind y Autoprefixer
+└── src/styles.scss           # Variables CSS y clases utilitarias
+```
+
+### Paleta de Colores Cultural
+- **Maya Gold** (`--color-maya-gold`): #FFD700 - Dorado tradicional
+- **Ceiba Green** (`--color-ceiba-green`): #2E7D32 - Verde sagrado del árbol
+- **Xibalba Purple** (`--color-xibalba-purple`): #4A148C - Místico del inframundo
+- **Cenote Blue** (`--color-cenote-blue`): #0277BD - Azul cristalino de cenotes
+
+### Uso en Componentes
+```html
+<!-- Clases Tailwind personalizadas -->
+<div class="bg-primary text-maya-gold shadow-cultural">
+  <h2 class="text-gradient-maya">Título Cultural</h2>
+</div>
+
+<!-- Variables CSS directas -->
+<div style="background: var(--color-ceiba-green)">
+  Elemento con color directo
+</div>
+```
+
+### Animaciones Culturales
+- `animate-float-petal` - Pétalos de cempasúchil flotantes
+- `animate-dance-fire` - Movimiento de velas rituales  
+- `animate-glow-candle` - Resplandor de luz sagrada
+- `animate-ripple-cenote` - Ondas de agua de cenote
+
+### Configuración Postcss
+```javascript
+// postcss.config.js
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+```
+
+## ⚠️ Precauciones y Buenas Prácticas
+
+### Versiones Críticas
+- **Tailwind CSS**: v3.4.17 (NO usar v4+ - incompatible)
+- **PostCSS**: v8.5.6+ requerido para Angular 20
+- **Sass**: Usar `@use` en lugar de `@import` (deprecado)
+
+### Problemas Comunes
+```bash
+# Error: "Cannot find module 'postcss'"
+npm install postcss autoprefixer --save-dev
+
+# Error: Tailwind v4 incompatibility
+npm uninstall tailwindcss
+npm install tailwindcss@^3.4.17 --save-dev
+```
+
+### Mejores Prácticas de Uso
+
+1. **Variables CSS First**: Usar custom properties para temas
+2. **Clases Utilitarias**: Preferir Tailwind sobre CSS custom
+3. **Responsive Design**: Mobile-first con breakpoints Tailwind
+4. **Performance**: Purge CSS automático en producción
+5. **Accesibilidad**: Respeta `prefers-reduced-motion`
 
 ## Documentación Técnica
 

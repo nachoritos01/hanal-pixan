@@ -1,8 +1,6 @@
 import { Component, ChangeDetectionStrategy, signal, computed, effect, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
-import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { CardComponent } from '../../shared/components/card/card.component';
 
 interface Ingredient {
@@ -25,8 +23,6 @@ interface RecipeStep {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    NavbarComponent,
-    FooterComponent,
     CardComponent
   ],
   templateUrl: './pib.component.html',

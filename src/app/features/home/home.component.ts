@@ -1,7 +1,5 @@
 import { Component, ChangeDetectionStrategy, OnInit, signal, computed, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { NavbarComponent } from '../../shared/components/navbar/navbar.component';
-import { FooterComponent } from '../../shared/components/footer/footer.component';
 import { CardComponent } from '../../shared/components/card/card.component';
 import { CommonModule } from '@angular/common';
 
@@ -16,8 +14,6 @@ interface OfferingItem {
   standalone: true,
   imports: [
     CommonModule,
-    NavbarComponent,
-    FooterComponent,
     CardComponent
   ],
   templateUrl: './home.component.html',

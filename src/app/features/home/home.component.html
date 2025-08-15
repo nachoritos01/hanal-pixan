@@ -1,18 +1,24 @@
-<app-navbar />
-
 <!-- HERO / COPA -->
 <section id="inicio" class="relative min-h-[92vh] flex items-center">
   <div class="mx-auto max-w-5xl px-6 text-center">
+    <div class="mb-8">
+      <img 
+        src="assets/images/general/ui/logo-hero.png"
+        alt="Hanal Pixán - Logo"
+        class="mx-auto w-80 sm:w-96 h-auto"
+        loading="eager"
+      />
+    </div>
     <h1 class="text-4xl sm:text-6xl font-extrabold leading-tight">
-      Hanal Pixán: <span class="text-accent-soft">La Comida de las Ánimas</span>
+      Hanal Pixán: <span class="text-accent-light">La Comida de las Ánimas</span>
     </h1>
-    <p class="mt-4 text-white/80 max-w-2xl mx-auto">
+    <p class="mt-4 text-secondary max-w-2xl mx-auto">
       Un descenso ritual guiado por la <span class="text-accent">Ceiba Sagrada</span>: de la copa al tronco y hasta las raíces, donde honramos a quienes regresan y compartimos el <em>pib</em> de nuestra familia.
     </p>
     <div class="mt-8">
       <a 
         href="#significado" 
-        class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 hover:bg-white/15 ring-1 ring-white/10 backdrop-blur transition-all duration-300"
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-card hover:bg-card ring-1 ring-border backdrop-blur transition-all duration-300"
       >
         Iniciar descenso
         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
@@ -30,24 +36,24 @@
   <div class="mx-auto max-w-6xl px-6 grid md:grid-cols-2 gap-12 items-center">
     <div>
       <h2 class="text-3xl font-bold mb-4">¿Qué es Hanal Pixán?</h2>
-      <p class="text-white/80 leading-relaxed">
+      <p class="text-secondary leading-relaxed">
         <strong>Hanal Pixán</strong> significa "comida de las ánimas". Se celebra en Yucatán, Campeche y Quintana Roo del 31 de octubre al 2 de noviembre. Durante estos días, se cree que las almas visitan a sus familias para convivir y disfrutar de las ofrendas: velas, flores, fotografías y sus platillos favoritos.
       </p>
-      <ul class="mt-6 space-y-3 text-white/80">
+      <ul class="mt-6 space-y-3 text-secondary">
         <li>• Altares adornados con flores, velas y retratos.</li>
         <li>• Comidas típicas: <em>mucbipollo</em> (pib), atole, dulce de calabaza y frutas.</li>
         <li>• Rezos y convivencia familiar.</li>
         <li>• Paseo de las Ánimas (Mérida) y limpieza de huesos en Pomuch.</li>
       </ul>
     </div>
-    <figure class="rounded-2xl overflow-hidden ring-1 ring-white/10">
+    <figure class="rounded-2xl overflow-hidden ring-1 ring-border">
       <img 
         alt="Altar tradicional yucateco" 
         class="w-full h-80 object-cover" 
         src="https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?q=80&w=1200&auto=format&fit=crop"
         loading="lazy"
       />
-      <figcaption class="px-4 py-3 text-xs text-white/60 bg-white/5">
+      <figcaption class="px-4 py-3 text-xs text-muted bg-card">
         Altar familiar con velas y flores de cempasúchil.
       </figcaption>
     </figure>
@@ -63,8 +69,8 @@
     <div class="grid lg:grid-cols-3 gap-6">
       @for (step of pibSteps(); track step.title) {
         <app-card variant="default">
-          <h3 class="font-semibold text-accent-soft">{{ step.title }}</h3>
-          <p class="mt-2 text-white/80 text-sm">{{ step.description }}</p>
+          <h3 class="font-semibold text-accent-light">{{ step.title }}</h3>
+          <p class="mt-2 text-secondary text-sm">{{ step.description }}</p>
         </app-card>
       }
     </div>
@@ -73,7 +79,7 @@
     <div class="mt-10 grid md:grid-cols-3 gap-4">
       @for (image of galleryImages(); track image.src) {
         <img 
-          [class]="'h-48 w-full object-cover rounded-xl ring-1 ring-white/10'"
+          [class]="'h-48 w-full object-cover rounded-xl ring-1 ring-border'"
           [alt]="image.alt" 
           [src]="image.src"
           loading="lazy"
@@ -91,7 +97,7 @@
       </button>
       <a 
         href="#xibalba" 
-        class="px-4 py-2 rounded-full bg-white/10 hover:bg-white/15 ring-1 ring-white/10 text-sm font-medium transition-colors"
+        class="px-4 py-2 rounded-full bg-card hover:bg-card ring-1 ring-border text-sm font-medium transition-colors"
       >
         Continuar descenso
       </a>
@@ -108,8 +114,8 @@
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
       @for (offering of offeringItems(); track offering.title) {
         <app-card variant="glass">
-          <h3 class="font-semibold text-accent-soft">{{ offering.title }}</h3>
-          <p class="text-white/80 text-sm mt-2">{{ offering.description }}</p>
+          <h3 class="font-semibold text-accent-light">{{ offering.title }}</h3>
+          <p class="text-secondary text-sm mt-2">{{ offering.description }}</p>
         </app-card>
       }
     </div>
@@ -122,7 +128,7 @@
 <section id="xibalba" class="relative py-28">
   <div class="mx-auto max-w-4xl px-6 text-center">
     <h2 class="text-3xl font-bold mb-6">Xibalbá – Memoria y Presencia</h2>
-    <p class="text-white/80">
+    <p class="text-secondary">
       En la oscuridad, el brillo turquesa del cenote nos recuerda el tránsito entre mundos. Aquí colocamos las fotos de quienes amamos.
     </p>
 
@@ -135,11 +141,9 @@
             [src]="memorial.src"
             loading="lazy"
           />
-          <p class="text-sm text-white/70">"{{ memorial.quote }}"</p>
+          <p class="text-sm text-muted">"{{ memorial.quote }}"</p>
         </app-card>
       }
     </div>
   </div>
 </section>
-
-<app-footer />
