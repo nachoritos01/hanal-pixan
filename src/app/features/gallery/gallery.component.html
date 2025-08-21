@@ -5,44 +5,94 @@
       <i data-lucide="camera" class="inline w-8 h-8 mr-2 text-maya-orange"></i>
       Galería Familiar
     </h2>
-    
-    <p class="text-center text-secondary mb-12 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
-      Momentos únicos de nuestra familia preparando el pib y celebrando el Hanal Pixán
+
+    <p
+      class="text-center text-secondary mb-12 max-w-2xl mx-auto"
+      data-aos="fade-up"
+      data-aos-delay="200"
+    >
+      Momentos únicos de nuestra familia preparando el pib y celebrando el Hanal
+      Pixán
     </p>
-    
+
     <!-- Masonry Grid usando CSS Grid -->
-    <div 
+    <!-- <div
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-max"
-      data-aos="fade-up" 
+      data-aos="fade-up"
       data-aos-delay="400"
     >
       @for (photo of galleryPhotos(); track photo.src; let i = $index) {
-        <div 
+      <div
+        class="group break-inside-avoid bg-overlay rounded-xl overflow-hidden ring-1 ring-border hover:ring-maya-orange/50 transition-all duration-300 hover:scale-[1.02]"
+        [attr.data-aos]="'zoom-in'"
+        [attr.data-aos-delay]="i * 100 + 600"
+      >
+        <div class="relative overflow-hidden">
+          <img
+            [src]="photo.src"
+            [alt]="photo.alt"
+            [class]="
+              'w-full object-cover group-hover:scale-110 transition-transform duration-500 ' +
+              photo.aspectRatio
+            "
+            loading="lazy"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          ></div>
+        </div>
+        <div class="p-4">
+          <p class="text-sm text-secondary text-center leading-relaxed">
+            {{ photo.caption }}
+          </p>
+        </div>
+      </div>
+      }
+    </div> -->
+
+    <div class="p-5 sm:p-8">
+      <div
+        class="columns-1 gap-5 sm:columns-2 sm:gap-8 md:columns-3 lg:columns-4 [&>img:not(:first-child)]:mt-8 p-2"
+      >
+        @for (photo of galleryPhotos(); track photo.src; let i = $index) {
+        <div
           class="group break-inside-avoid bg-overlay rounded-xl overflow-hidden ring-1 ring-border hover:ring-maya-orange/50 transition-all duration-300 hover:scale-[1.02]"
           [attr.data-aos]="'zoom-in'"
-          [attr.data-aos-delay]="(i * 100) + 600"
+          [attr.data-aos-delay]="i * 100 + 600"
         >
           <div class="relative overflow-hidden">
-            <img 
+            <img
               [src]="photo.src"
               [alt]="photo.alt"
-              [class]="'w-full object-cover group-hover:scale-110 transition-transform duration-500 ' + photo.aspectRatio"
+              [class]="
+                'w-full object-cover group-hover:scale-110 transition-transform duration-500 ' +
+                photo.aspectRatio
+              "
               loading="lazy"
             />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            ></div>
           </div>
           <div class="p-4">
-            <p class="text-sm text-secondary text-center leading-relaxed">{{ photo.caption }}</p>
+            <p class="text-sm text-secondary text-center leading-relaxed">
+              {{ photo.caption }}
+            </p>
           </div>
         </div>
-      }
+        }
+      </div>
     </div>
 
     <!-- Mensaje informativo -->
     <div class="mt-12 text-center" data-aos="fade-up" data-aos-delay="800">
-      <div class="inline-flex items-center space-x-2 text-muted bg-card rounded-full px-6 py-3">
+      <div
+        class="inline-flex items-center space-x-2 text-muted bg-card rounded-full px-6 py-3"
+      >
         <i data-lucide="heart" class="w-4 h-4 text-maya-orange"></i>
-        <span class="text-sm">Fotos tomadas durante nuestras celebraciones familiares</span>
+        <span class="text-sm"
+          >Fotos tomadas durante nuestras celebraciones familiares</span
+        >
       </div>
     </div>
   </div>

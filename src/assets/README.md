@@ -20,7 +20,7 @@ src/assets/
 │   │   ├── offerings/        # Ofrendas tradicionales
 │   │   └── memorial/         # Elementos memoriales
 │   ├── pib/                  # Receta y preparación del pib
-│   │   ├── ingredients/      # Ingredientes del mucbipollo
+│   │   ├── ingredients/      # Ingredientes del pib
 │   │   ├── process/          # Pasos de preparación
 │   │   └── final/            # Resultado final
 │   └── general/              # Imágenes generales
@@ -54,13 +54,15 @@ src/assets/
 ## 🎨 Convenciones de Nomenclatura
 
 ### Imágenes
+
 - **Formato**: `kebab-case.extension`
-- **Ejemplos**: 
+- **Ejemplos**:
   - `ceiba-tree-canopy.jpg`
   - `maya-glyph-death.svg`
   - `pib-ingredients-masa.png`
 
 ### Iconos
+
 - **Formato**: `action-element.svg`
 - **Ejemplos**:
   - `nav-home.svg`
@@ -68,6 +70,7 @@ src/assets/
   - `cultural-copal.svg`
 
 ### Videos/Audio
+
 - **Formato**: `type-description.extension`
 - **Ejemplos**:
   - `ambient-cenote-sounds.mp3`
@@ -76,65 +79,74 @@ src/assets/
 ## 📱 Formatos Recomendados
 
 ### Imágenes
+
 - **Hero/Backgrounds**: `.webp` o `.jpg` (optimizadas)
 - **Iconos/Glifos**: `.svg` (vectoriales)
 - **UI Elements**: `.png` (con transparencia)
 - **Thumbnails**: `.webp` (máximo 300kb)
 
 ### Videos
+
 - **Background**: `.webm` (comprimido, loop)
 - **Documentales**: `.mp4` (H.264)
 
 ### Audio
+
 - **Ambiente**: `.mp3` (128kbps)
 - **Música**: `.mp3` (192kbps)
 
 ## 🔧 Uso en Angular 20
 
 ### En Componentes
+
 ```typescript
 // Importación directa de assets
 export class HomeComponent {
-  readonly ceibaImage = 'assets/images/maya/ceiba-tree/sacred-tree.webp';
-  readonly mayaIcon = 'assets/icons/cultural/ceiba-symbol.svg';
+  readonly ceibaImage = "assets/images/maya/ceiba-tree/sacred-tree.webp";
+  readonly mayaIcon = "assets/icons/cultural/ceiba-symbol.svg";
 }
 ```
 
 ### En Templates
+
 ```html
 <!-- Imagen responsiva con lazy loading -->
-<img 
-  [src]="ceibaImage" 
+<img
+  [src]="ceibaImage"
   alt="Árbol Ceiba sagrado"
   loading="lazy"
-  class="w-full h-auto">
+  class="w-full h-auto"
+/>
 
 <!-- Icono SVG inline -->
-<img [src]="mayaIcon" class="w-6 h-6" alt="Símbolo Ceiba">
+<img [src]="mayaIcon" class="w-6 h-6" alt="Símbolo Ceiba" />
 ```
 
 ### En Estilos SCSS
+
 ```scss
 // Background con path relativo
 .hero-section {
-  background-image: url('assets/images/general/backgrounds/xibalba-mist.jpg');
+  background-image: url("assets/images/general/backgrounds/xibalba-mist.jpg");
 }
 ```
 
 ## 🚀 Optimización
 
 ### Build Process
+
 - Angular automáticamente copia `src/assets/` a `dist/assets/`
 - Las imágenes se optimizan durante el build
 - Los assets no utilizados no se incluyen en el bundle final
 
 ### Lazy Loading
+
 ```typescript
 // Carga diferida de imágenes
 @Component({
   template: `
-    <img 
-      [src]="imageUrl" 
+    <img
+      [src]="imageUrl"
       loading="lazy"
       [class.loaded]="imageLoaded"
       (load)="onImageLoad()">
@@ -143,6 +155,7 @@ export class HomeComponent {
 ```
 
 ### Performance
+
 - Usar `.webp` para imágenes modernas
 - Implementar `loading="lazy"` en imágenes
 - Optimizar SVGs con herramientas como SVGO
@@ -161,12 +174,14 @@ export class HomeComponent {
 ## 🌐 Consideraciones Culturales
 
 ### Representación Respetuosa
+
 - Usar imágenes auténticas de tradiciones mayas
 - Evitar apropiación cultural inapropiada
 - Incluir contexto educativo en alt text
 - Respetar la sacralidad de elementos rituales
 
 ### Fuentes de Contenido
+
 - Fotografías originales de celebraciones reales
 - Ilustraciones culturalmente apropiadas
 - Símbolos mayas con significado correcto
@@ -174,4 +189,4 @@ export class HomeComponent {
 
 ---
 
-*Estructura creada para el proyecto Hanal Pixán - Angular 20*
+_Estructura creada para el proyecto Hanal Pixán - Angular 20_

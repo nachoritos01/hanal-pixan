@@ -2,27 +2,41 @@
 <section class="relative py-24">
   <div class="mx-auto max-w-6xl px-6">
     <h2 class="text-3xl font-bold text-center mb-12" data-aos="fade-up">
-      <i data-lucide="sparkles" class="inline w-8 h-8 mr-2 text-maya-orange"></i>
+      <i
+        data-lucide="sparkles"
+        class="inline w-8 h-8 mr-2 text-maya-orange"
+      ></i>
       Elementos Culturales
     </h2>
-    
+
     <div class="grid md:grid-cols-3 gap-8">
       @for (element of culturalElements(); track element.title) {
-        <app-card 
-          variant="default" 
-          customClasses="text-center hover:scale-105 transition-transform duration-300"
-          [attr.data-aos]="'fade-up'"
-          [attr.data-aos-delay]="element.delay"
+      <app-card
+        variant="default"
+        customClasses="text-center hover:scale-105 transition-transform duration-300"
+        [attr.data-aos]="'fade-up'"
+        [attr.data-aos-delay]="element.delay"
+      >
+        <div
+          class="w-16 h-16 bg-maya-orange/20 rounded-full flex items-center justify-center mx-auto mb-4"
         >
-          <div class="w-16 h-16 bg-maya-orange/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i [attr.data-lucide]="element.icon" class="w-8 h-8 text-maya-orange"></i>
-          </div>
-          <h3 class="text-xl font-semibold mb-4 text-accent-light">{{ element.title }}</h3>
-          <p class="text-secondary mb-4 leading-relaxed">{{ element.description }}</p>
-          <div class="bg-maya-orange/10 rounded-lg p-4 border-l-4 border-maya-orange">
-            <p class="text-sm text-maya-orange italic">"{{ element.quote }}"</p>
-          </div>
-        </app-card>
+          <i
+            [attr.data-lucide]="element.icon"
+            class="w-8 h-8 text-maya-orange"
+          ></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-4 text-accent-light">
+          {{ element.title }}
+        </h3>
+        <p class="text-secondary mb-4 leading-relaxed">
+          {{ element.description }}
+        </p>
+        <div
+          class="bg-maya-orange/10 rounded-lg p-4 border-l-4 border-maya-orange"
+        >
+          <p class="text-sm text-maya-orange italic">"{{ element.quote }}"</p>
+        </div>
+      </app-card>
       }
     </div>
   </div>
